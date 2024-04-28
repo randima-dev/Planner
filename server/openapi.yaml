@@ -1,0 +1,185 @@
+openapi: 3.0.3
+info:
+  title: Hotel Management API
+  description: >-
+    This API manages hotels and their wedding packages, including different options based on food selection, bites, and liquor.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Learn more about this API
+  url: https://example.com/docs
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: hotels
+    description: Operations related to hotels
+  - name: packages
+    description: Operations related to wedding packages
+paths:
+  /hotels:
+    get:
+      summary: List all hotels
+      tags:
+        - hotels
+      responses:
+        "200":
+          description: A list of hotels
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hotel'
+    post:
+      summary: Create a new hotel
+      tags:
+        - hotels
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Hotel'
+      responses:
+        "201":
+          description: Hotel created successfully
+        "400":
+          description: Invalid request data
+
+  /hotels/{hotelId}:
+    get:
+      summary: Get a single hotel by its ID
+      tags:
+        - hotels
+      parameters:
+        - name: hotelId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Detailed information of a hotel
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hotel'
+        "404":
+          description: Hotel not found
+    put:
+      summary: Update a hotel's details
+      tags:
+        - hotels
+      parameters:
+        - name: hotelId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Hotel'
+      responses:
+        "200":
+          description: Hotel updated successfully
+        "404":
+          description: Hotel not found
+        "400":
+          description: Invalid request data
+    delete:
+      summary: Delete a hotel
+      tags:
+        - hotels
+      parameters:
+        - name: hotelId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Hotel deleted successfully
+        "404":
+          description: Hotel not found
+
+  /hotels/{hotelId}/packages:
+    get:
+      summary: List all packages for a hotel
+      tags:
+        - packages
+      parameters:
+        - name: hotelId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: An array of wedding packages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Package'
+    post:
+      summary: Create a new package for a hotel
+      tags:
+        - packages
+      parameters:
+        - name: hotelId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Package'
+      responses:
+        "201":
+          description: Package created successfully
+        "400":
+          description: Invalid request data
+
+components:
+  schemas:
+    Hotel:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        location:
+          type: string
+        capacity:
+          type: integer
+        description:
+          type: string
+      required:
+        - name
+        - location
+
+    Package:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        pricePerPerson:
+          type: number
+          format: double
+        description:
+          type: string
+      required:
+        - name
+        - pricePerPerson
