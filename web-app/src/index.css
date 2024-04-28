@@ -1,0 +1,101 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@supports (scrollbar-width: none) and (-moz-appearance: none){ 
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #A0A0A0 #d3d3d3;
+  }
+}
+
+/* Chrome, Edge and Safari */
+*::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+*::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background: #9BA6B14D;
+}
+
+*::-webkit-scrollbar-track:hover {
+  background-color: #9ba6b161;
+}
+
+*::-webkit-scrollbar-track:active {
+  background-color: #9ba6b161;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #5E536499;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #5E536499;
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: #5E536499;
+}
+
+
+.dateDropDown {
+  display: flex;
+  align-items: center;
+  padding: 8px 24px 8px 24px;
+  background: #9BA6B11A;
+  border-radius: 24px;
+  gap: 8px;
+  input#\:r5\:::placeholder {
+      color: #5E5364;
+      font-weight: 400;
+      opacity: 1;
+  }
+  .calendarIcon {
+      color: #5E5364;
+  }
+  .MuiStack-root {
+      padding-top: 0px;
+      width: 160px;
+  }
+  .MuiTextField-root {
+      min-width: 160px;
+      width: 160px;
+      .MuiOutlinedInput-input {
+          padding: 0px;
+      }
+  }
+  .MuiOutlinedInput-notchedOutline {
+      border: none,
+  }
+  .MuiStack-root>.MuiTextField-root {
+    min-width: 160px;
+  }
+}
+
+
+/* src\containers\onBoarding\userDetails\userDetails.scss */
+div#vertical-tabpanel-0 {
+  width: 100%;
+}
+div#vertical-tabpanel-1 {
+  width: 100%;
+}
+div#vertical-tabpanel-2 {
+  width: 100%;
+}
+div#vertical-tabpanel-3 {
+  width: 100%;
+}
