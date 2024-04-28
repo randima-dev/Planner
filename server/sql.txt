@@ -1,0 +1,44 @@
+CREATE TABLE hotels (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  location VARCHAR(255) NOT NULL,
+  capacity INT,
+  description TEXT
+);
+
+
+CREATE TABLE packages (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  hotel_id INT,
+  name VARCHAR(255) NOT NULL,
+  price_per_person DECIMAL(10, 2),
+  description TEXT,
+  FOREIGN KEY (hotel_id) REFERENCES hotels(id)
+);
+
+CREATE TABLE package_details (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  package_id INT,
+  detail_type ENUM('food', 'bites', 'liquor') NOT NULL,
+  description VARCHAR(255),
+  additional_cost DECIMAL(10, 2),
+  FOREIGN KEY (package_id) REFERENCES packages(id)
+);
+
+
+INSERT INTO hotels (name, location, capacity, description) VALUES ('Grand Wedding Venue', '1234 Festive Blvd', 200, 'A perfect place for grand celebrations.');
+
+INSERT INTO packages (hotel_id, name, price_per_person, description) 
+VALUES 
+  (1, 'Standard Package', 50.00, 'Includes basic seating and standard meal service.'),
+  (1, 'Premium Package', 75.00, 'Includes premium seating, extended meal service, and two types of liquor.'),
+  (1, 'Deluxe Package', 100.00, 'All-inclusive with gourmet food, multiple bites options, and a full bar.');
+
+
+INSERT INTO package_details (package_id, detail_type, description, additional_cost) 
+VALUES 
+  (2, 'food', 'Seafood platter', 10.00),
+  (2, 'liquor', 'Premium whisky selection', 15.00),
+  (3, 'bites', 'Deluxe appetizers', 5.00),
+  (3, 'liquor', 'Exclusive vineyard wines', 20.00);
+

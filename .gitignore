@@ -2,3 +2,5 @@
 Wedding Whirl/.choreo-project
 Wedding Whirl/repos/randima-dev/Planner/
 Wedding Whirl/Wedding Whirl.code-workspace
+server/node_modules/
+.env
