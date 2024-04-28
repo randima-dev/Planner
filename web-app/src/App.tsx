@@ -131,6 +131,7 @@ function App() {
                 }}
               >
                 <AppRoutes />
+
               </Box>
             </Box>
           </Box>
