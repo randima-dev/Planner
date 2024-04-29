@@ -51,5 +51,5 @@ function deployReactApp() returns string {
 }
 
 public function main() {
-    io:println("Webhook server started listening on port 9090");
+    io:println("Webhook server started listening on port 9090 ");
 }
