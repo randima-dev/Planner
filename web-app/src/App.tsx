@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   CssBaseline,
   IconButton,
   ThemeProvider,
@@ -90,7 +91,7 @@ function App() {
 
   return (
     <ThemeProvider theme={customTheme}>
-      {state.isAuthenticated ? (
+      {!state.isAuthenticated ? (
         <Box
           bgcolor={"background.default"}
           color={"text.primary"}
@@ -160,10 +161,10 @@ function App() {
           )}
         </Box>
       ) : (
-        <button onClick={() => signIn()}>Login</button>
+        <Button onClick={() => signIn()} sx={{padding:'50%'}}>Login</Button>
       )}
     </ThemeProvider>
-  );
+  ); 
 }
 
 export default App;
