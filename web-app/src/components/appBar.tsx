@@ -6,7 +6,7 @@ import { styled } from "@mui/material/styles";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useNavigate } from 'react-router-dom';
 
-const drawerWidth = 272;
+const drawerWidth = 272; 
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
