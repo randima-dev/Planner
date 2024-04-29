@@ -17,6 +17,8 @@ import MuiDrawer from "@mui/material/Drawer";
 import AppRoutes from "./routes";
 import AppBarComponent from "./components/appBar";
 
+import { useAuthContext } from "@asgardeo/auth-react";
+
 const drawerWidth = 272;
 const lapScreen = 1537;
 
@@ -84,77 +86,82 @@ function App() {
     setOpen(false);
   };
 
+  const { state, signIn, signOut } = useAuthContext();
+
   return (
     <ThemeProvider theme={customTheme}>
-      <Box
-        bgcolor={"background.default"}
-        color={"text.primary"}
-        sx={{ display: "flex" }}
-      >
-        <AppBarComponent
-          sideBarScreen={sideBarScreen}
-          handleDrawerOpen={handleDrawerOpen}
-          open={open}
-          smallScreen={smallScreen}
-        />
-        {sideBarScreen ? (
-          <Box sx={{ display: "flex", width: "100%" }}>
-            <CssBaseline />
+      {state.isAuthenticated ? (
+        <Box
+          bgcolor={"background.default"}
+          color={"text.primary"}
+          sx={{ display: "flex" }}
+        >
+          <AppBarComponent
+            sideBarScreen={sideBarScreen}
+            handleDrawerOpen={handleDrawerOpen}
+            open={open}
+            smallScreen={smallScreen}
+          />
+          {sideBarScreen ? (
+            <Box sx={{ display: "flex", width: "100%" }}>
+              <CssBaseline />
 
-            <Drawer variant="permanent" open={open}>
-              <DrawerHeader
-                sx={{
-                  zIndex: (theme: { zIndex: { drawer: number } }) =>
-                    theme.zIndex.drawer + 1,
-                }}
-              >
-                <IconButton onClick={handleDrawerClose}>
-                  {theme.direction === "ltr" ? (
-                    <ChevronLeftIcon />
-                  ) : (
-                    <ChevronRightIcon />
-                  )}
-                </IconButton>
-              </DrawerHeader>
-              <LeftBar isLaptop={open} closeSideBar={handleDrawerClose} />
-            </Drawer>
-            <Box component="main" sx={{ p: "0px", width: "100%" }}>
-              <DrawerHeader />
+              <Drawer variant="permanent" open={open}>
+                <DrawerHeader
+                  sx={{
+                    zIndex: (theme: { zIndex: { drawer: number } }) =>
+                      theme.zIndex.drawer + 1,
+                  }}
+                >
+                  <IconButton onClick={handleDrawerClose}>
+                    {theme.direction === "ltr" ? (
+                      <ChevronLeftIcon />
+                    ) : (
+                      <ChevronRightIcon />
+                    )}
+                  </IconButton>
+                </DrawerHeader>
+                <LeftBar isLaptop={open} closeSideBar={handleDrawerClose} />
+              </Drawer>
+              <Box component="main" sx={{ p: "0px", width: "100%" }}>
+                <DrawerHeader />
+                <Box
+                  sx={{
+                    minHeight: "100vh",
+                    width: "100%",
+                    paddingLeft: isExtraSmallScreen ? "15px" : 4,
+                    paddingRight: isExtraSmallScreen ? "15px" : 4,
+                    height: "100%",
+                    paddingTop: 4,
+                  }}
+                >
+                  <AppRoutes />
+                </Box>
+              </Box>
+            </Box>
+          ) : (
+            <>
+              <LeftBar isLaptop={true} width={drawerWidth} />
               <Box
                 sx={{
                   minHeight: "100vh",
                   width: "100%",
-                  paddingLeft: isExtraSmallScreen ? "15px" : 4,
-                  paddingRight: isExtraSmallScreen ? "15px" : 4,
+                  mt: "64px",
+                  marginLeft: 4,
+                  marginRight: 4,
                   height: "100%",
                   paddingTop: 4,
+                  paddingBottom: 4,
                 }}
               >
                 <AppRoutes />
-
               </Box>
-            </Box>
-          </Box>
-        ) : (
-          <>
-            <LeftBar isLaptop={true} width={drawerWidth} />
-            <Box
-              sx={{
-                minHeight: "100vh",
-                width: "100%",
-                mt: "64px",
-                marginLeft: 4,
-                marginRight: 4,
-                height: "100%",
-                paddingTop: 4,
-                paddingBottom: 4,
-              }}
-            >
-              <AppRoutes />
-            </Box>
-          </>
-        )}
-      </Box>
+            </>
+          )}
+        </Box>
+      ) : (
+        <button onClick={() => signIn()}>Login</button>
+      )}
     </ThemeProvider>
   );
 }

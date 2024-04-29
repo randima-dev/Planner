@@ -1,23 +1,34 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from './states';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./states";
+import { AuthProvider } from "@asgardeo/auth-react";
 
 const root = ReactDOM.createRoot(
-   document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 root.render(
-   <React.StrictMode>
+  <AuthProvider
+    config={{
+      signInRedirectURL: "https://localhost:3000",
+      signOutRedirectURL: "https://localhost:3000",
+      clientID: "QdYnUYkWlGfoRhQCgX9Z25rwxUQa",
+      baseUrl: "https://api.asgardeo.io/t/choreocode",
+      scope: ["openid", "profile"],
+    }}
+  >
+    <React.StrictMode>
       <Provider store={store}>
-         <BrowserRouter>
-            <App />
-         </BrowserRouter>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </Provider>
-   </React.StrictMode>
+    </React.StrictMode>
+  </AuthProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
