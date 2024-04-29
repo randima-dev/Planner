@@ -14,10 +14,10 @@ const root = ReactDOM.createRoot(
 root.render(
   <AuthProvider
     config={{
-      signInRedirectURL: "https://localhost:3000",
-      signOutRedirectURL: "https://localhost:3000",
-      clientID: "QdYnUYkWlGfoRhQCgX9Z25rwxUQa",
-      baseUrl: "https://api.asgardeo.io/t/choreocode",
+      signInRedirectURL: "https://ddea8870-23c8-48e0-9b36-08a52fa7ef13.e1-us-cdp-2.choreoapps.dev/auth/login/callback",
+      signOutRedirectURL: "https://ddea8870-23c8-48e0-9b36-08a52fa7ef13.e1-us-cdp-2.choreoapps.dev/auth/logout/callback",
+      clientID: "S259m_8Fm1E_hrEdZmR6lRNFVKga",
+      baseUrl: "https://ddea8870-23c8-48e0-9b36-08a52fa7ef13.e1-us-cdp-2.choreoapps.dev",
       scope: ["openid", "profile"],
     }}
   >
