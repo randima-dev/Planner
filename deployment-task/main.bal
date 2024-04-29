@@ -1,55 +1,33 @@
 import ballerina/http;
-import ballerina/io;
-import ballerina/os;
+import ballerina/task;
+import ballerina/time;
 
-// HTTP service configuration to listen for webhook events
-service /webhook on new http:Listener(9090) {
+// Constants for Choreo API
+const string CHOREO_TOKEN = "67a7c119-c00e-4e23-a093-c4659a7eee9b";
+const string CHOREO_API_ENDPOINT = "https://console.choreo.dev/organizations/choreocode/projects/98c44313-307a-44f8-beb0-2156b4f39bdf/components/ubmxnt/build";
 
-    // Resource to handle POST requests from your version control system
-    resource function post commit(http:Caller caller, http:Request req) {
-        json|error payload = req.getJsonPayload();
-        if (payload is json) {
-            io:println("Received Commit: ", payload.toJsonString());
-            // Assuming payload contains the necessary information
-            string result = deployReactApp();
-            http:Response res = new;
-            res.setPayload("Deployment Triggered: " + result);
-            var sendResult = caller->respond(res);
-            if (sendResult is error) {
-                io:println("Error sending response: ", sendResult.message());
-            }
-        } else {
-            io:println("Error in fetching JSON payload: ", payload.message());
-        }
+// HTTP Client configuration
+http:Client choreoClient = new (CHOREO_API_ENDPOINT, config = {
+    auth: {
+        token: CHOREO_TOKEN
+    }
+});
+
+// Function to trigger the Choreo build and deployment
+function triggerChoreoDeployment() returns error? {
+    http:Response response = check choreoClient->post("/deployments", "Trigger Build and Deploy");
+    if (response.statusCode == http:STATUS_OK) {
+        io:println("Deployment triggered successfully.");
+    } else {
+        return error("Failed to trigger deployment: " + response.getJsonPayload().toString());
     }
 }
 
-// Function to handle the deployment process
-function deployReactApp() returns string {
-    // Step 1: Build the React app
-    string buildCommand = "npm run build";
-    os:Process|error buildProcess = os:exec(buildCommand, {}, {}, ".");
-
-    if (buildProcess is os:Process) {
-        string buildOutput = check buildProcess.stdout();
-        io:println("Build Output: ", buildOutput);
-    } else {
-        return "Failed to build the React app: " + buildProcess.message();
-    }
-
-    // Step 2: Deploy to WSO2 Choreo
-    string deployCommand = "curl -X POST -F 'data=@./build' https://api.choreo.dev/deploy";
-    os:Process|error deployProcess = os:exec(deployCommand, {}, {}, ".");
-
-    if (deployProcess is os:Process) {
-        string deployOutput = check deployProcess.stdout();
-        io:println("Deploy Output: ", deployOutput);
-        return "Deployment successful.";
-    } else {
-        return "Failed to deploy the React app: " + deployProcess.message();
-    }
-}
-
+// Scheduling the task
 public function main() {
-    io:println("Webhook server started listening on port 9090 ");
+    task:JobId jobId = check task:scheduleJobOneTime(triggerChoreoDeployment, task:TimerConfiguration {
+        initialDelay: 5,
+        interval: 3600 // Interval in seconds (1 hour)
+    });
+    io:println("Deployment scheduler started.");
 }
