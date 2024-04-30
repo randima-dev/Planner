@@ -12,7 +12,7 @@ function AppRoutes() {
   return (
     <Suspense fallback={<LoadingScreen />}>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Hotels />} />
         <Route path="/home/hotels" element={<Hotels />} />
         <Route path="/home/photography" element={<Photography />} />
         <Route path="/home/jewellery" element={<Jewellery />} />

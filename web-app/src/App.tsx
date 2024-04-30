@@ -161,7 +161,7 @@ function App() {
           )}
         </Box>
       ) : (
-        <Button onClick={() => signIn()} sx={{padding:'50%'}}>Login</Button>
+        <Button onClick={() => signIn()} sx={{padding:'50vh 50vw'}}>Login</Button>
       )}
     </ThemeProvider>
   ); 
