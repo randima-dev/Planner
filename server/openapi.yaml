@@ -1,31 +1,19 @@
-openapi: 3.0.3
+openapi: 3.0.0
 info:
   title: Hotel Management API
-  description: >-
-    This API manages hotels and their wedding packages, including different options based on food selection, bites, and liquor.
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 1.0.0
-externalDocs:
-  description: Learn more about this API
-  url: https://example.com/docs
+  description: This is a sample server for managing hotels.
+  version: "1.0.0"
 servers:
-  - url: http://localhost:8080
-tags:
-  - name: hotels
-    description: Operations related to hotels
-  - name: packages
-    description: Operations related to wedding packages
+  - url: 'http://localhost:3000/api'
+    description: Development server
 paths:
   /hotels:
     get:
       summary: List all hotels
-      tags:
-        - hotels
+      operationId: getHotels
       responses:
-        "200":
-          description: A list of hotels
+        '200':
+          description: An array of hotels
           content:
             application/json:
               schema:
@@ -34,8 +22,7 @@ paths:
                   $ref: '#/components/schemas/Hotel'
     post:
       summary: Create a new hotel
-      tags:
-        - hotels
+      operationId: createHotel
       requestBody:
         required: true
         content:
@@ -43,37 +30,32 @@ paths:
             schema:
               $ref: '#/components/schemas/Hotel'
       responses:
-        "201":
-          description: Hotel created successfully
-        "400":
-          description: Invalid request data
-
-  /hotels/{hotelId}:
+        '201':
+          description: Hotel created
+  /hotels/{id}:
     get:
-      summary: Get a single hotel by its ID
-      tags:
-        - hotels
+      summary: Get a hotel by ID
+      operationId: getHotelById
       parameters:
-        - name: hotelId
+        - name: id
           in: path
           required: true
           schema:
             type: integer
       responses:
-        "200":
-          description: Detailed information of a hotel
+        '200':
+          description: A single hotel
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Hotel'
-        "404":
+        '404':
           description: Hotel not found
     put:
-      summary: Update a hotel's details
-      tags:
-        - hotels
+      summary: Update a hotel
+      operationId: updateHotel
       parameters:
-        - name: hotelId
+        - name: id
           in: path
           required: true
           schema:
@@ -85,101 +67,41 @@ paths:
             schema:
               $ref: '#/components/schemas/Hotel'
       responses:
-        "200":
-          description: Hotel updated successfully
-        "404":
-          description: Hotel not found
-        "400":
-          description: Invalid request data
+        '200':
+          description: Hotel updated
     delete:
       summary: Delete a hotel
-      tags:
-        - hotels
+      operationId: deleteHotel
       parameters:
-        - name: hotelId
+        - name: id
           in: path
           required: true
           schema:
             type: integer
       responses:
-        "200":
-          description: Hotel deleted successfully
-        "404":
-          description: Hotel not found
-
-  /hotels/{hotelId}/packages:
-    get:
-      summary: List all packages for a hotel
-      tags:
-        - packages
-      parameters:
-        - name: hotelId
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: An array of wedding packages
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Package'
-    post:
-      summary: Create a new package for a hotel
-      tags:
-        - packages
-      parameters:
-        - name: hotelId
-          in: path
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Package'
-      responses:
-        "201":
-          description: Package created successfully
-        "400":
-          description: Invalid request data
-
+        '204':
+          description: Hotel deleted
 components:
   schemas:
     Hotel:
       type: object
+      required:
+        - title
+        - createdDate
+        - isLiked
+        - text
+        - imageUrl
       properties:
         id:
           type: integer
-        name:
+          format: int64
+        title:
           type: string
-        location:
+        createdDate:
           type: string
-        capacity:
-          type: integer
-        description:
+        isLiked:
+          type: boolean
+        text:
           type: string
-      required:
-        - name
-        - location
-
-    Package:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
+        imageUrl:
           type: string
-        pricePerPerson:
-          type: number
-          format: double
-        description:
-          type: string
-      required:
-        - name
-        - pricePerPerson

@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const hotelController = require('../../controllers/hotels/hotelController');
+const hotelController = require('../controllers/hotels/hotelController');
 
-console.log("🚀 ~ hotelController:")
-router.get('/', hotelController.getAllHotels);
+router.get('/', hotelController.getHotels);
+router.get('/search', hotelController.searchHotels);
 router.get('/:id', hotelController.getHotelById);
 router.post('/', hotelController.createHotel);
 router.put('/:id', hotelController.updateHotel);
