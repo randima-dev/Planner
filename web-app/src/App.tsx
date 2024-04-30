@@ -91,7 +91,7 @@ function App() {
 
   return (
     <ThemeProvider theme={customTheme}>
-      {!state.isAuthenticated ? (
+      {state.isAuthenticated ? (
         <Box
           bgcolor={"background.default"}
           color={"text.primary"}
