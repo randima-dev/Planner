@@ -65,14 +65,14 @@ function Hotels() {
 
   return (
     <Box sx={{ flexGrow: 1 }} padding={'2px 8px'} display={'flex'} className='test'>
-      <Box
+      {/* <Box
         sx={{
           width: 500,
           maxWidth: "100%",
         }}
       >
         <TextField fullWidth label="fullWidth" id="fullWidth" />
-      </Box>
+      </Box> */}
       <Box>
         <Grid
           container
