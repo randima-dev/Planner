@@ -1,11 +1,8 @@
 import { combineReducers } from "redux";
-import navigationReducer from './navigations'
-import vaccineDataReducer from "./vaccines";
-
+import { hotelReducer } from "../reducers/hotel";
 
 const rootReducer = combineReducers({
-    navigation: navigationReducer,
-    vaccines: vaccineDataReducer
+  hotel: hotelReducer,
 });
 
 export type AppState = ReturnType<typeof rootReducer>;

@@ -1,12 +1,10 @@
 import { all, fork } from "redux-saga/effects";
-import navigationDetailsSaga from "./navigation";
-import vaccineDataSaga from "./vaccines";
+import hotelSaga from "../saga/hotel"
 
 
 /*TODO: it's need to configure newly added Saga here.*/
 export function* rootSaga() {
   yield all([
-    fork(navigationDetailsSaga),
-    fork(vaccineDataSaga),
+    fork(hotelSaga),
   ]);
 }
