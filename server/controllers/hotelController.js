@@ -41,7 +41,7 @@ exports.updateHotel = async (req, res) => {
   const hotel = new Hotel(req.params.id, req.body.title, req.body.createdDate, req.body.isLiked, req.body.text, req.body.imageUrl);
   try {
     await hotel.save();
-    res.send('Hotel updated successfully');
+    res.status(200).send('Hotel updated successfully');
   } catch (err) {
     res.status(500).send('Error while updating the hotel');
   }
@@ -52,7 +52,7 @@ exports.deleteHotel = async (req, res) => {
   const hotel = new Hotel(req.params.id);
   try {
     await hotel.delete();
-    res.send('Hotel deleted successfully');
+    res.status(200).send('Hotel deleted successfully');
   } catch (err) {
     res.status(500).send('Error while deleting the hotel');
   }
